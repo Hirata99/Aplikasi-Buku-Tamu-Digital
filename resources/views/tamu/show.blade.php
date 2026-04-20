@@ -39,11 +39,8 @@
                     </table>
 
                     <div class="mt-4">
-                        <a href="{{ route('tamu.index') }}" class="btn btn-secondary">
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-2"></i>Kembali
-                        </a>
-                        <a href="{{ route('tamu.edit', $tamu) }}" class="btn btn-warning">
-                            <i class="bi bi-pencil me-2"></i>Edit
                         </a>
                     </div>
                 </div>

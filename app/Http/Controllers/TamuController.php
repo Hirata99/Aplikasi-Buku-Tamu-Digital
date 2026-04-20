@@ -70,6 +70,10 @@ class TamuController extends Controller
      */
     public function edit(Tamu $tamu)
     {
+        if ($tamu->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('tamu.edit', compact('tamu'));
     }
 
@@ -78,6 +82,10 @@ class TamuController extends Controller
      */
     public function update(Request $request, Tamu $tamu)
     {
+        if ($tamu->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'kategori' => 'required|in:pemerintah,swasta,pendidikan,umum,lainnya',
@@ -106,9 +114,13 @@ class TamuController extends Controller
      */
     public function destroy(Tamu $tamu)
     {
-        $tamu->delete();
+    if ($tamu->user_id !== Auth::id()) {
+        abort(403, 'Unauthorized action.');
+    }
 
-        return redirect()->route('tamu.index')
-            ->with('success', 'Data tamu berhasil dihapus!');
+    $tamu->delete();
+
+    return redirect()->route('tamu.index')
+        ->with('success', 'Data tamu berhasil dihapus!');
     }
 }
