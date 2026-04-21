@@ -12,9 +12,18 @@
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="alert alert-dismissible fade show d-flex align-items-center gap-3 border-0 rounded-3 shadow-sm mb-4"
+            style="background: linear-gradient(135deg, #d1fae5, #ecfdf5); border-left: 4px solid #10b981 !important; border-left-style: solid !important;"
+            role="alert">
+            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                style="width:40px; height:40px; background:#10b981;">
+                <i class="bi bi-check-lg text-white fw-bold"></i>
+            </div>
+            <div>
+                <div class="fw-semibold" style="color:#065f46;">Berhasil!</div>
+                <div style="font-size:14px; color:#047857;">{{ session('success') }}</div>
+            </div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
@@ -45,7 +54,7 @@
                                     {{ $tamu->nama_instansi }}
                                 </td>
                                 <td>{{ $tamu->telpon }}</td>
-                                <td>{{ Str::limit($tamu->maksud_tujuan, 50) }}</td>
+                                <td>{{ Str::limit($tamu->maksud_tujuan, 20) }}</td>
                                 <td>{{ $tamu->waktu_kunjungan->format('d M Y, H:i') }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
@@ -55,19 +64,16 @@
                                         <a href="{{ route('tamu.edit', $tamu) }}" class="btn btn-sm btn-warning">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <form action="{{ route('tamu.destroy', $tamu) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            onclick="confirmDelete('{{ route('tamu.destroy', $tamu) }}', '{{ $tamu->nama }}')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4">
+                                <td colspan="8" class="text-center py-4">
                                     <i class="bi bi-inbox fs-1 text-muted"></i>
                                     <p class="text-muted mt-2">Belum ada data tamu</p>
                                 </td>
@@ -83,4 +89,54 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Konfirmasi Hapus --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-body p-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                        style="width:52px; height:52px; background:#fee2e2;">
+                        <i class="bi bi-trash3-fill" style="color:#dc2626; font-size:20px;"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-semibold mb-0" id="deleteModalLabel">Hapus Data Tamu</h6>
+                        <small class="text-muted">Tindakan ini tidak dapat dibatalkan</small>
+                    </div>
+                </div>
+
+                <p class="text-muted mb-1" style="font-size:14px;">
+                    Anda akan menghapus data tamu:
+                </p>
+                <p class="fw-semibold mb-3" id="deleteTargetName" style="font-size:15px;"></p>
+                <p class="text-muted mb-4" style="font-size:13px;">
+                    Data yang sudah dihapus tidak dapat dipulihkan kembali. Pastikan Anda sudah yakin sebelum melanjutkan.
+                </p>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-1"></i>Batal
+                    </button>
+                    <form id="deleteForm" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger px-4">
+                            <i class="bi bi-trash3 me-1"></i>Ya, Hapus
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete(url, nama) {
+    document.getElementById('deleteForm').action = url;
+    document.getElementById('deleteTargetName').textContent = nama;
+    var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    modal.show();
+}
+</script>
 @endsection

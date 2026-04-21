@@ -196,12 +196,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::is('gallery') ? 'active' : '' }}" href="{{ url('/gallery') }}">
-                                <i class="bi bi-image me-1"></i>
-                                Gallery
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">
                                 <i class="bi bi-box-arrow-in-right me-1"></i>
                                 Login

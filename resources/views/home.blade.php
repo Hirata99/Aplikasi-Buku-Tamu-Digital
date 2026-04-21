@@ -139,7 +139,7 @@
                     Prosesnya cepat, mudah, dan aman!
                 </p>
                 <div>
-                    <a href="{{ url('/datatamu') }}" class="btn btn-light btn-lg px-5">
+                    <a href="{{ url('/login') }}" class="btn btn-light btn-lg px-5">
                         <i class="bi bi-arrow-right-circle me-2"></i>Mulai Mengisi Sekarang
                     </a>
                 </div>

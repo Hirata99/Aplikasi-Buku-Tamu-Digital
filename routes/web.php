@@ -19,10 +19,6 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/gallery', function ()  {
-    return view('gallery');
-})->name('gallery');
-
 // Routes untuk authenticated users (ketika sudah login)
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
