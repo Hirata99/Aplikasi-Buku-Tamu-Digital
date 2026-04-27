@@ -11,9 +11,17 @@
                     <h4 class="mb-0"><i class="bi bi-person-badge me-2"></i>Detail Tamu</h4>
                 </div>
                 <div class="card-body p-4">
-                    <table class="table table-borderless">
+                    <!-- Tambah style="table-layout: fixed; word-wrap: break-word;" -->
+                    <table class="table table-borderless"
+                           style="table-layout: fixed; word-wrap: break-word;">
+                        <colgroup>
+                            <!-- Kolom th: lebar tetap 200px -->
+                            <col style="width: 200px;">
+                            <!-- Kolom td: sisa lebar tabel -->
+                            <col>
+                        </colgroup>
                         <tr>
-                            <th width="200">Nama</th>
+                            <th>Nama</th>
                             <td>: {{ $tamu->nama }}</td>
                         </tr>
                         <tr>
@@ -26,7 +34,8 @@
                         </tr>
                         <tr>
                             <th>Email</th>
-                            <td>: {{ $tamu->email }}</td>
+                            <!-- Tambah style="word-break: break-all;" khusus email -->
+                            <td style="word-break: break-all;">: {{ $tamu->email }}</td>
                         </tr>
                         <tr>
                             <th>Maksud & Tujuan</th>
